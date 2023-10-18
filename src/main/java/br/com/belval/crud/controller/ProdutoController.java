@@ -102,7 +102,51 @@ public class ProdutoController {
 		return encontrou;
 	}
 	
+
+	private String excluirProduto(int id) {
+		ListIterator<Produto> it = lista.listIterator();
+		while(it.hasNext()) {
+			Produto encontrado = it.next();;
+			if (encontrado.getId() ==id) {
+				it.remove();;
+
+			}
+		}
+		return "lista-produtos";
 	
+	}
+	
+	
+	/*@GetMapping("/produto/{id}/delete")
+	public String delete(@PathVariable int id, Model model) {
+		
+		Produto produto = buscarPorId(id);
+		
+		if (produto == null) {
+			return "produto-nao-encontrado";
+		}
+		
+		model.addAttribute("produto", produto);
+		
+		
+		return "lista-produtos";
+	}*/
+	
+	@GetMapping("/produto/{id}/delete")
+    public String delete(@PathVariable int id, RedirectAttributes redirectAttributes) {
+        String produto = excluirProduto(id);
+
+        if (produto == null) {
+            return "produto-nao-encontrado"; // Retorna a página de produto não encontrado
+        }
+
+        // Realiza a exclusão do produto
+        excluirProduto(id);
+        redirectAttributes.addFlashAttribute("msg","Produto excluído");
+       
+        
+        return "redirect:/produto/list"; // Redireciona para a página de lista de produtos após a exclusão
+    }
 
 	
 }
