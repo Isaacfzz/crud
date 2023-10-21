@@ -17,9 +17,6 @@ import br.com.belval.crud.repository.ProdutoRepository;
 @Controller
 public class ProdutoController {
 
-//	private static List<Produto> lista = new ArrayList<>();
-//	private static int proxId = 1;
-
 	@Autowired
 	private ProdutoRepository repository;
 
@@ -48,33 +45,15 @@ public class ProdutoController {
 		ModelAndView modelAndView = new ModelAndView("redirect:/produto/list");
 
 		if (produto.getId() == 0) {
-			// insert(produto);
+
 			redirectAttributes.addFlashAttribute("msg", "Novo produto criado!");
 		} else {
-			// update(produto);
+
 			redirectAttributes.addFlashAttribute("msg", "produto atualizado");
 		}
 		repository.save(produto);
 		return modelAndView;
 	}
-
-//	private void insert(Produto produto) {
-//		produto.setId(proxId++);
-////		lista.add(produto);
-//		repository.save(produto);
-//	}
-//
-//	private void update(Produto produto) {
-//		repository.save(produto);
-//		ListIterator<Produto> it = lista.listIterator();
-//		while(it.hasNext()) {
-//			Produto encontrado = it.next();
-//			if (encontrado.getId() == produto.getId()) {
-//				it.remove();
-//				it.add(produto);
-//			}
-//		}
-//	}
 
 	@GetMapping("/produto/list")
 	public String list(Model model) {
@@ -95,42 +74,10 @@ public class ProdutoController {
 		return "produto-nao-encontrado";
 	}
 
-//	private Produto ♦(int id) {
-//		Produto encontrou = null;
-//		for (Produto p : lista) {
-//			if (p.getId() == id) {
-//				// encontrou o produto solicitado
-//				encontrou = p;
-//				break;
-//			}
-//		}
-//		return encontrou;
-//	}
-
-//	private String excluirProduto(int id) {
-//		ListIterator<Produto> it = lista.listIterator();
-//		while (it.hasNext()) {
-//			Produto encontrado = it.next();
-//			;
-//			if (encontrado.getId() == id) {
-//				it.remove();
-//				;
-//
-//			}
-//		}
-//		return "lista-produtos";
-//
-//	}
-
 
 	@GetMapping("/produto/{id}/delete")
 	public ModelAndView delete(@PathVariable int id, RedirectAttributes redirectAttributes) {
 		ModelAndView view = new ModelAndView("redirect:/produto/list");
-		//		String produto = excluirProduto(id);
-//
-//		if (produto == null) {
-//			return "produto-nao-encontrado"; // Retorna a página de produto não encontrado
-//		}
 
 		// Realiza a exclusão do produto
 		repository.deleteById(id);
